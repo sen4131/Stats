@@ -11,10 +11,10 @@ ind_var <<- 'mestsAll'
 
 
 #Histogram for all variables
-for(i in names(MyData)){
-  hist(MyData[,i], main = i , xlab = i, density=10, freq = FALSE)
+for(i in seq_along(MyData)){
+  hist(MyData[,i], main = paste('Fig.',i,'Histogram of', names(MyData[i])) , xlab = names(MyData[i]), density=10, freq = FALSE)
   curve(dnorm(x, mean=mean(MyData[,i]), sd=sd(MyData[,i])), add = TRUE, col="darkblue")
-  }
+}
 
 #Scatterplot for all variables
 for(i in names(MyData)){
