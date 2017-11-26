@@ -1,0 +1,154 @@
+library(readxl)
+cleaveland_stats <- read_excel("C:/Users/Sen/Desktop/cleaveland_stats.xlsx")
+View(cleaveland_stats)
+
+MyData <- cleaveland_stats
+
+#Packages needed
+#install.packages("vcd")
+#install.packages("gmodels")
+
+library(vcd) # Cramers V 
+library(gmodels) #Crosstabs
+
+#Histogram for all variables
+hist(MyData$age, 
+     main = 'Fig. 1 Histogram of Age' , 
+     xlab = 'Frequency', col="darkgreen", 
+     density = 20, 
+     freq = TRUE)
+curve(dnorm(x, mean=mean(MyData$age), sd=sd(MyData$age)), 
+      add = TRUE, col="black")
+
+hist(MyData$restBP, 
+     main = 'Fig. 2 Histogram of restBP' , 
+     xlab = 'Frequency', 
+     col="darkgreen", 
+     density = 20, 
+     freq = FALSE)
+curve(dnorm(x, mean=mean(MyData$restBP), sd=sd(MyData$restBP)), 
+      add = TRUE, 
+      col="black")
+
+hist(MyData$chol, 
+     main = 'Fig. 3 Histogram of chol' , 
+     xlab = 'Frequency', 
+     col="darkgreen", 
+     density = 20, 
+     freq = FALSE)
+curve(dnorm(x, mean=mean(MyData$chol), sd=sd(MyData$chol)), 
+      add = TRUE, 
+      col="black")
+
+hist(MyData$`heart rate`, 
+     main = 'Fig. 4 Histogram of `heart rate`' , 
+     xlab = 'Frequency', 
+     col="darkgreen", 
+     density = 20, 
+     freq = FALSE)
+curve(dnorm(x, mean=mean(MyData$`heart rate`), sd=sd(MyData$`heart rate`)), 
+      add = TRUE, 
+      col="black")
+
+hist(MyData$sex, 
+     main = 'Fig. 5 Histogram of sex' , 
+     xlab = 'Frequency', 
+     breaks = 2, 
+     col="darkgreen", 
+     density = 10, 
+     freq = FALSE)
+curve(dnorm(x, mean=mean(MyData$sex), sd=sd(MyData$sex)), 
+      add = TRUE, 
+      col="black")
+
+hist(MyData$`Heart condition`, 
+     main = 'Fig. 6 Histogram of `Heart condition`' , 
+     xlab = 'Frequency', 
+     breaks = 2, 
+     col="darkgreen", 
+     density = 10, 
+     freq = FALSE)
+curve(dnorm(x, mean=mean(MyData$`Heart condition`), sd=sd(MyData$`Heart condition`)), 
+      add = TRUE, 
+      col="black")
+  
+#Binning numeric variables
+
+ageGroup = cut(MyData$age,5)
+restBP = cut(MyData$restBP,3)
+cholestrol = cut(MyData$chol,3)
+heartRate = cut(MyData$`heart rate`,3)
+
+# Cross tabulation
+
+#1 ageGroup v Heart condition
+
+table1 = CrossTable(ageGroup,MyData$`Heart condition`,
+                    expected = TRUE, 
+                    prop.r = FALSE,
+                    prop.c = FALSE,
+                    prop.t = FALSE,
+                    prop.chisq = FALSE,
+                    fisher = FALSE,
+                    resid = TRUE, 
+                    format = c('SPSS'))
+
+assocstats(table(ageGroup,MyData$`Heart condition`))
+
+
+#2 Blood Pressure at rest v Heart condition
+
+table2 = CrossTable(restBP,MyData$`Heart condition`,
+                    expected = TRUE, 
+                    prop.r = FALSE,
+                    prop.c = FALSE,
+                    prop.t = FALSE,
+                    prop.chisq = FALSE,
+                    fisher = FALSE,
+                    resid = TRUE, 
+                    format = c('SPSS'))
+
+assocstats(table(restBP,MyData$`Heart condition`))
+
+
+#3 cholestrol at rest v Heart condition
+
+table3 = CrossTable(cholestrol,MyData$`Heart condition`,
+                    expected = TRUE, 
+                    prop.r = FALSE,
+                    prop.c = FALSE,
+                    prop.t = FALSE,
+                    prop.chisq = FALSE,
+                    fisher = FALSE,
+                    resid = TRUE, 
+                    format = c('SPSS'))
+
+assocstats(table(cholestrol,MyData$`Heart condition`))
+
+#4 Heart rate at rest v Heart condition
+
+table4 = CrossTable(heartRate,MyData$`Heart condition`,
+                    expected = TRUE, 
+                    prop.r = FALSE,
+                    prop.c = FALSE,
+                    prop.t = FALSE,
+                    prop.chisq = FALSE,
+                    fisher = FALSE,
+                    resid = TRUE, 
+                    format = c('SPSS'))
+
+assocstats(table(heartRate,MyData$`Heart condition`))
+
+#5 Heart rate at rest v Heart condition
+
+table5 = CrossTable(MyData$sex,MyData$`Heart condition`,
+                    expected = TRUE, 
+                    prop.r = FALSE,
+                    prop.c = FALSE,
+                    prop.t = FALSE,
+                    prop.chisq = FALSE,
+                    fisher = FALSE,
+                    resid = TRUE, 
+                    format = c('SPSS'))
+
+assocstats(table(MyData$sex,MyData$`Heart condition`))
