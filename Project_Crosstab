@@ -1,7 +1,15 @@
+'''
+Author: Sen Varghese
+DS 602
+Title: A cross tabulation analysis on factors that determine heart condition
+
+'''
+#Load data
 library(readxl)
 cleaveland_stats <- read_excel("C:/Users/Sen/Desktop/cleaveland_stats.xlsx")
 View(cleaveland_stats)
 
+#store dataframe data in variable
 MyData <- cleaveland_stats
 
 #Packages needed
@@ -14,70 +22,67 @@ library(gmodels) #Crosstabs
 #Histogram for all variables
 hist(MyData$age, 
      main = 'Fig. 1 Histogram of Age' , 
-     xlab = 'Frequency', col="darkgreen", 
+     xlab = 'Value', col="darkgreen", 
      density = 20, 
-     freq = TRUE)
-curve(dnorm(x, mean=mean(MyData$age), sd=sd(MyData$age)), 
-      add = TRUE, col="black")
+     freq = FALSE)
+
 
 hist(MyData$restBP, 
      main = 'Fig. 2 Histogram of restBP' , 
-     xlab = 'Frequency', 
+     xlab = 'Value', 
      col="darkgreen", 
      density = 20, 
      freq = FALSE)
-curve(dnorm(x, mean=mean(MyData$restBP), sd=sd(MyData$restBP)), 
-      add = TRUE, 
-      col="black")
+
 
 hist(MyData$chol, 
      main = 'Fig. 3 Histogram of chol' , 
-     xlab = 'Frequency', 
+     xlab = 'Value', 
      col="darkgreen", 
      density = 20, 
      freq = FALSE)
-curve(dnorm(x, mean=mean(MyData$chol), sd=sd(MyData$chol)), 
-      add = TRUE, 
-      col="black")
+
 
 hist(MyData$`heart rate`, 
      main = 'Fig. 4 Histogram of `heart rate`' , 
-     xlab = 'Frequency', 
+     xlab = 'Value', 
      col="darkgreen", 
      density = 20, 
      freq = FALSE)
-curve(dnorm(x, mean=mean(MyData$`heart rate`), sd=sd(MyData$`heart rate`)), 
-      add = TRUE, 
-      col="black")
+
 
 hist(MyData$sex, 
      main = 'Fig. 5 Histogram of sex' , 
-     xlab = 'Frequency', 
+     xlab = 'Value', 
      breaks = 2, 
      col="darkgreen", 
      density = 10, 
      freq = FALSE)
-curve(dnorm(x, mean=mean(MyData$sex), sd=sd(MyData$sex)), 
-      add = TRUE, 
-      col="black")
+
 
 hist(MyData$`Heart condition`, 
      main = 'Fig. 6 Histogram of `Heart condition`' , 
-     xlab = 'Frequency', 
+     xlab = 'Value', 
      breaks = 2, 
      col="darkgreen", 
      density = 10, 
      freq = FALSE)
-curve(dnorm(x, mean=mean(MyData$`Heart condition`), sd=sd(MyData$`Heart condition`)), 
-      add = TRUE, 
-      col="black")
+
   
-#Binning numeric variables
+# Binning numeric variables
 
 ageGroup = cut(MyData$age,5)
 restBP = cut(MyData$restBP,3)
 cholestrol = cut(MyData$chol,3)
 heartRate = cut(MyData$`heart rate`,3)
+
+#Driscriptive Statistics
+
+describe(MyData)
+describe(ageGroup)
+describe(restBP)
+describe(cholestrol)
+describe(heartRate)
 
 # Cross tabulation
 
